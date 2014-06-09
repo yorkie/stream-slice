@@ -1,0 +1,26 @@
+{
+  "name": "slice-stream",
+  "version": "0.0.1",
+  "description": "slice stream like buffer/string",
+  "main": "index.js",
+  "scripts": {
+    "test": "tape test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:yorkie/slice-stream.git"
+  },
+  "keywords": [
+    "slice",
+    "stream"
+  ],
+  "author": "Yorkie Neil <yorkiefixer@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/yorkie/slice-stream/issues"
+  },
+  "homepage": "https://github.com/yorkie/slice-stream",
+  "devDependencies": {
+    "tape": "^2.13.2"
+  }
+}
