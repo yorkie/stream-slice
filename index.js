@@ -20,22 +20,32 @@ function SliceStream(start, end) {
 }
 
 SliceStream.prototype._transform = function(chunk, encoding, done) {
-  var offset = this._offset + chunk.length;
-  if (!this._emitUp && offset >= this._start) {
+  this._offset += chunk.length;
+  if (!this._emitUp && this._offset >= this._start) {
     this._emitUp = true;
-    this.push(chunk.slice(chunk.length - (offset - this._start), this._end));
+    var start = chunk.length - (this._offset - this._start);
+    if(this._offset > this._end)
+    {
+        var end = chunk.length - (this._offset - this._end);
+        this._emitDown = true;
+        this.push(chunk.slice(start, end));
+    }
+    else
+    {
+        this.push(chunk.slice(start, chunk.length));
+    }
     return done();
   }
   if (this._emitUp && !this._emitDown) {
-    if (offset >= this.end) {
+    if (this._offset >= this._end) {
       this._emitDown = true;
-      this.push(chunk.slice(chunk.length - (offset - this._end)));
+      this.push(chunk.slice(0, chunk.length - (this._offset - this._end)));
     } else {
       this.push(chunk);
     }
     return done();
   }
-  done();
+  return done();
 }
 
 exports.slice = function(start, end) {
